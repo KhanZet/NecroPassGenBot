@@ -1,0 +1,17 @@
+[
+    {
+        "user_id": 7269075160,
+        "password_settings": {
+            "length": {
+                "min_length": 10,
+                "max_length": 20,
+                "total_length": 10,
+                "fixed_length": false
+            },
+            "include_uppercase": true,
+            "include_lowercase": true,
+            "include_digits": true,
+            "include_specials": true
+        }
+    }
+]
