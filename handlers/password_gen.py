@@ -40,3 +40,6 @@ async def pass_gen(message: Message):
     jt.write_json(users_data, jt.user_data_path)
 
     await message.answer(f"<code>{safe_password}</code>", parse_mode="HTML")
+
+
+# test
