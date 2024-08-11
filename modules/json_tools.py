@@ -3,7 +3,8 @@ from pathlib import Path
 import datetime as dt
 
 
-def find_user_by_id(users, id):
+def find_user_by_id(path, id):
+    users = read_json(path)
     for user in users:
         if user["user_id"] == id:
             return user
@@ -39,6 +40,35 @@ def add_password(user, date, password):
         user["history"][date].append(password)
     else:
         user["history"][date] = [password]
+
+
+def create_user(user_id, username):
+    user_data = {"user_id": user_id, "username": username, "history": {}}
+    user_settings = {
+        "user_id": user_id,
+        "password_settings": {
+            "length": {
+                "min_length": 8,
+                "max_length": 16,
+                "total_length": 15,
+                "fixed_length": True,
+            },
+            "include_uppercase": True,
+            "include_lowercase": True,
+            "include_digits": True,
+            "include_specials": True,
+        },
+    }
+
+    if find_user_by_id(user_data_path, user_id):
+        print("Данные пользователя есть в базе")
+    else:
+        add_user(user_data, user_data_path)
+
+    if find_user_by_id(user_settings_path, user_id):
+        print("Настройки пользователя есть в базе")
+    else:
+        add_user(user_settings, user_settings_path)
 
 
 user_data_path = Path(__file__).parent.parent / "data" / "user_data.json"

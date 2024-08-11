@@ -24,7 +24,7 @@ async def my_account(message: Message, state: FSMContext):
     await state.set_state(Account_form.start_menu)
 
 
-@router.message(F.text == "Моя история")
+@router.message(F.text == "📚 Моя история")
 async def send_history(message: Message):
     user_id = message.from_user.id
     users_data = jt.read_json(jt.user_data_path)
@@ -41,7 +41,7 @@ async def send_history(message: Message):
     await message.answer_document(FSInputFile(history_path))
 
 
-@router.message(Account_form.start_menu, F.text == "Назад")
+@router.message(Account_form.start_menu, F.text == "🔙 Назад")
 async def back_to_menu(message: Message, state: FSMContext):
     await message.answer("Переход к главному меню...", reply_markup=main)
     await state.clear()

@@ -19,9 +19,7 @@ router = Router()
 @router.message(F.text == "🔐 Сгенерировать пароль")
 async def pass_gen(message: Message):
     user_id = message.from_user.id
-    user_from_settings = jt.find_user_by_id(
-        jt.read_json(jt.user_settings_path), user_id
-    )
+    user_from_settings = jt.find_user_by_id(jt.user_settings_path, user_id)
     password = pg.generate_password(user_from_settings)
     safe_password = html.escape(password)
     users_data = jt.read_json(jt.user_data_path)
