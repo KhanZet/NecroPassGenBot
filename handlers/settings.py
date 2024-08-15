@@ -22,10 +22,12 @@ def bool_to_str(value):
 
 
 def get_settings_msg(message):
-    user = jt.find_user_by_id(jt.user_settings_path, message.from_user.id)
+    users = jt.read_json(jt.user_settings_path)
+    user = jt.find_user_by_id(users, message.from_user.id)
     if user == None:
         jt.create_user(message.from_user.id, message.from_user.username)
-        user = jt.find_user_by_id(jt.user_settings_path, message.from_user.id)
+        users = jt.read_json(jt.user_settings_path)
+        user = jt.find_user_by_id(users, message.from_user.id)
 
     fixed_length = user["password_settings"]["length"]["fixed_length"]
 
@@ -138,7 +140,7 @@ async def input_value(message: Message, state: FSMContext):
         data = await state.get_data()
         option = int(data.get("selected_option"))
         users = jt.read_json(jt.user_settings_path)
-        user = jt.find_user_by_id(jt.user_settings_path, message.from_user.id)
+        user = jt.find_user_by_id(users, message.from_user.id)
         if not user:
             await message.answer("Пользователь не найден")
             return

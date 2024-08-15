@@ -11,6 +11,8 @@ from keyboards.reply import rmk, my_account_kb, main
 
 from modules import json_tools as jt
 
+import os
+
 router = Router()
 
 
@@ -30,15 +32,24 @@ async def send_history(message: Message):
     users_data = jt.read_json(jt.user_data_path)
     user_data = jt.find_user_by_id(users_data, user_id)
 
+    if user_data is None or not user_data.get("history"):
+        await message.answer("У вас пока нету сохраненной истории")
+        return
+
     history_path = "history.txt"
-    with open(history_path, "w") as f:
-        for date, passwords in user_data["history"].items():
-            f.write(f"{date}:\n")
-            for password in passwords:
-                f.write(f"  {password}\n")
-            f.write("\n")
+    try:
+        with open(history_path, "w") as f:
+            for date, passwords in user_data["history"].items():
+                f.write(f"{date}:\n")
+                for password in passwords:
+                    f.write(f"  {password}\n")
+                f.write("\n")
+    except Exception as e:
+        await message.answer(f"Произошла ошибка при создании файла: {str(e)}")
+        return
 
     await message.answer_document(FSInputFile(history_path))
+    os.remove(history_path)
 
 
 @router.message(Account_form.start_menu, F.text == "🔙 Назад")

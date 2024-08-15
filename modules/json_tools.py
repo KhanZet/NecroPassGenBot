@@ -3,8 +3,7 @@ from pathlib import Path
 import datetime as dt
 
 
-def find_user_by_id(path, id):
-    users = read_json(path)
+def find_user_by_id(users, id):
     for user in users:
         if user["user_id"] == id:
             return user
@@ -60,12 +59,12 @@ def create_user(user_id, username):
         },
     }
 
-    if find_user_by_id(user_data_path, user_id):
+    if find_user_by_id(read_json(user_settings_path), user_id):
         print("Данные пользователя есть в базе")
     else:
         add_user(user_data, user_data_path)
 
-    if find_user_by_id(user_settings_path, user_id):
+    if find_user_by_id(read_json(user_settings_path), user_id):
         print("Настройки пользователя есть в базе")
     else:
         add_user(user_settings, user_settings_path)
