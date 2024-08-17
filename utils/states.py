@@ -29,3 +29,4 @@ class Tools_form(StatesGroup):
     start_menu = State()
     random_input_value = State()
     random_emoji = State()
+    random_swear = State()
