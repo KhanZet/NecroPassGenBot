@@ -18,7 +18,7 @@ from handlers import (
     tools,
 )
 
-API_TOKEN = "7272758325:AAHQ71TdCTcdkZr23IXtWgyWbWWF_KIPx7k"
+API_TOKEN = ""
 
 
 bot = Bot(token=API_TOKEN, default=DefaultBotProperties(parse_mode="HTML"))
